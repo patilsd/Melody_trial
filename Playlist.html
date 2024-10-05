@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Player - Playlist</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    nav {
+      background-color: #222;
+      padding: 15px;
+      text-align: center;
+    }
+    nav ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: inline-block;
+    }
+    nav ul li {
+      display: inline;
+      margin-right: 20px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    nav ul li a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    .song-list, .playlist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .song-card {
+      background-color: #222;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      width: 200px;
+      cursor: pointer;
+    }
+    .song-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .song-card h3, .song-card p {
+      margin: 10px 0;
+    }
+    audio {
+      margin-top: 20px;
+      width: 100%;
+    }
+    .add-to-playlist, .remove-from-playlist {
+      background-color: #ff4757;
+      border: none;
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .add-to-playlist, .remove-from-playlist:hover {
+      background-color: #ff6b81;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="Playlist.html">Playlist</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Your Playlist</h1>
+    <div class="playlist" id="playlist"></div>
+    <audio id="audioPlayer" controls></audio>
+  </div>
+
+  <script>
+    // Retrieve playlist from localStorage
+    function getPlaylist() {
+      return JSON.parse(localStorage.getItem('playlist')) || [];
+    }
+
+    const playlistContainer = document.getElementById('playlist');
+    const audioPlayer = document.getElementById('audioPlayer');
+
+    // Function to display the playlist
+    function displayPlaylist() {
+      const playlist = getPlaylist();
+      playlistContainer.innerHTML = ''; // Clear previous content
+
+      if (playlist.length === 0) {
+        playlistContainer.innerHTML = '<p>Your playlist is empty. Add some songs!</p>';
+        return;
+      }
+
+      playlist.forEach(song => {
+        const songCard = document.createElement('div');
+        songCard.classList.add('song-card');
+
+        songCard.innerHTML = `
+          <img src="${song.artwork}" alt="${song.title}">
+          <h3>${song.title}</h3>
+          <p>${song.artist}</p>
+          <button class="remove-from-playlist">Remove from Playlist</button>
+        `;
+
+        // Play song when the song card is clicked
+        songCard.addEventListener('click', (e) => {
+          if (!e.target.classList.contains('remove-from-playlist')) {
+            playSong(song.url);
+          }
+        });
+
+        // Remove song when "Remove from Playlist" is clicked
+        songCard.querySelector('.remove-from-playlist').addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent playing the song when clicking remove
+          removeFromPlaylist(song.id);
+        });
+
+        playlistContainer.appendChild(songCard);
+      });
+    }
+
+    // Function to play a song
+    function playSong(url) {
+      audioPlayer.src = url;
+      audioPlayer.play();
+    }
+
+    // Function to remove a song from the playlist
+    function removeFromPlaylist(songId) {
+      const playlist = getPlaylist();
+      const updatedPlaylist = playlist.filter(song => song.id !== songId);
+      localStorage.setItem('playlist', JSON.stringify(updatedPlaylist));
+      displayPlaylist();
+    }
+
+    // Initial display of playlist
+    displayPlaylist();
+  </script>
+</body>
+</html>

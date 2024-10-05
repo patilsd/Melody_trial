@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="song.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://kit.fontawesome.com/8b6c95fcc2.js" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&family=Sixtyfour+Convergence&display=swap');
+
+        ul {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: black;
+            border-bottom: 1px solid gray;
+
+        }
+
+
+        ul li {
+            display: inline-block;
+            color: white;
+        }
+
+        /* li {
+            float: left;
+            color: white;
+        } */
+
+        li a {
+            display: block;
+            text-align: center;
+            color: white;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #443b3b;
+        }
+
+        ul li:first-Child img {
+            border-radius: 50%;
+            width: 100px;
+        }
+
+        ul h1 {
+            font-family: "Lobster", sans-serif;
+            color: rgb(36, 181, 181);
+            font-size: 40px;
+
+        }
+
+        ul div {
+            display: flex;
+            justify-content: space-between;
+            width: 15%;
+            align-items: center;
+            font-weight: 550;
+        }
+
+
+
+        #logout, #Playlist_btn {
+            display: none;
+            font-size: 12px;
+            color: white;
+        }
+
+        a {
+            color: white;
+            border-radius: 20px;
+            background: transparent;
+            border: 1px gray solid;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+
+        #pop {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+            -webkit-animation-name: fadeIn;
+            /* Fade in the background */
+            -webkit-animation-duration: 0.4s;
+            animation-name: fadeIn;
+            animation-duration: 0.4s;
+        }
+
+        #content {
+            font-weight: bold;
+            position: fixed;
+            bottom: 0;
+            background-color: black;
+            width: 100%;
+            height: auto;
+            -webkit-animation-name: slideIn;
+            -webkit-animation-duration: 0.4s;
+            animation-name: slideIn;
+            animation-duration: 0.4s;
+            text-align: center;
+            padding-top: 40px;
+            padding-bottom: 30px;
+            /* margin-top:100px; */
+        }
+
+        #content img {
+            padding: 5px;
+            height: 200px;
+            width: 150px;
+
+        }
+
+        #content button {
+            cursor: pointer;
+            background-color: rgb(125, 17, 134);
+            border: 1px solid rgb(125, 17, 134);
+            border-radius: 5px;
+            margin-top: 16px;
+            height: 40px;
+            width: 60px;
+            color: white;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            ul {
+                flex-direction: column;
+                /* Stack items vertically on small screens */
+                padding: 10px;
+            }
+
+            ul h1 {
+                font-size: 24px;
+                /* Smaller title */
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            ul li:first-child img {
+                width: 50px;
+                /* Smaller logo */
+            }
+
+            ul div {
+                width: 100%;
+                /* Stack login/signup horizontally */
+                justify-content: space-around;
+            }
+
+            li a {
+                padding: 10px 12px;
+                /* Reduce padding for smaller links */
+            }
+        }
+
+        @media (max-width: 480px) {
+            ul {
+                padding: 5px;
+            }
+
+            ul h1 {
+                font-size: 20px;
+                /* Even smaller title */
+            }
+
+            li a {
+                font-size: 14px;
+                /* Smaller link text */
+                padding: 8px;
+            }
+        }
+
+
+        .footer-upper {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 100px;
+            color: #fff;
+            background-color: black;
+            padding: 30px;
+        }
+
+        .footer-upper .footer_parts h3 {
+            font-size: 18px;
+            font-weight: 550;
+        }
+
+        .footer-upper .footer_parts p {
+            font-size: 15px;
+            color: #c6c4c4;
+        }
+
+        .footer-upper .footer_parts p:hover {
+            color: #fefcfc;
+        }
+
+        /* Large screens (desktops) */
+        @media (min-width: 1024px) {
+            .footer-upper {
+                padding: 40px 60px;
+            }
+
+            .footer-upper .footer_parts h3 {
+                font-size: 20px;
+            }
+
+            .footer-upper .footer_parts p {
+                font-size: 16px;
+            }
+
+            .footer_icons i {
+                font-size: 24px;
+            }
+        }
+
+        /* Medium screens (tablets) */
+        @media (max-width: 1024px) {
+            .footer-upper {
+                flex-direction: row;
+                padding: 20px 30px;
+            }
+
+            .footer-upper .footer_parts h3 {
+                font-size: 18px;
+            }
+
+            .footer-upper .footer_parts p {
+                font-size: 15px;
+            }
+
+            .footer_icons i {
+                font-size: 22px;
+            }
+        }
+
+        /* Small screens (phones) */
+        @media (max-width: 768px) {
+            .footer-upper {
+                flex-direction: column;
+                /* Stack columns */
+                text-align: center;
+                padding: 20px;
+            }
+
+            .footer_parts {
+                margin-bottom: 20px;
+            }
+
+            .footer_icons {
+                justify-content: center;
+            }
+
+            .footer_icons i {
+                font-size: 20px;
+            }
+        }
+
+        /* Extra small screens (very small phones) */
+        @media (max-width: 480px) {
+            .footer-upper {
+                padding: 15px;
+            }
+
+            .footer-upper .footer_parts h3 {
+                font-size: 16px;
+            }
+
+            .footer-upper .footer_parts p {
+                font-size: 14px;
+            }
+
+            .footer_icons i {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>
+            <a href="home.html"><img src="project.png" /></a>
+        </li>
+        <li>
+            <h1>Melody: The Heartbeat of Music</h1>
+        </li>
+
+        <div>
+            <li id="login"><a href="login.html">Login</a></li>
+            <li id="signup"><a href="signup.html">SignUp</a></li>
+
+            <li id="Playlist_btn" onclick="addSongs()">
+                <a href="Playlist.html" id="Play">Your Playlist</a>
+            </li>
+
+            <li id="logout" onclick="logout_data()">
+                <a href="home.html" id="log">LogOut</a>
+            </li>
+        </div>
+    </ul>
+    <div id="songs"></div>
+    <div id="pop"></div>
+
+    <footer>
+        <div class="footer-upper">
+            <div class="footer_parts">
+                <h3>Company</h3>
+                <p>About</p>
+                <p>Jobs</p>
+                <p>For the Record</p>
+            </div>
+            <div class="footer_parts">
+                <h3>Communities</h3>
+                <p>Developers</p>
+                <p>Advertising</p>
+                <p>Investors</p>
+                <p>Vendors</p>
+            </div>
+            <div class="footer_parts">
+                <h3>Useful links</h3>
+                <p>Support</p>
+                <p>Free Mobile App</p>
+            </div>
+            <div class="footer_parts">
+                <h3>Our Plans</h3>
+                <p>Premium Individual</p>
+                <p>Premium Duo</p>
+                <p>Premium Family</p>
+                <p>Premium Student</p>
+            </div>
+            <div class="footer_icons">
+                <i class="fa-brands fa-instagram" style="color: #ffffff;"></i>
+                <i class="fa-brands fa-twitter" style="color: #ffffff;"></i>
+                <i class="fa-brands fa-youtube" style="color: #ffffff;"></i>
+                <i class="fa-brands fa-facebook" style="color: #ffffff;"></i>
+            </div>
+
+        </div>
+    </footer>
+</body>
+
+
+<script src="home.js"></script>
+<script src="song.js"></script>
+
+</html>
